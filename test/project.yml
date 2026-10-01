@@ -1,0 +1,46 @@
+# ==============================================================================
+# CEEDLING PROJECT CONFIGURATION
+# ==============================================================================
+
+# Core Ceedling project setup options
+:project:
+  :use_exceptions: FALSE             # Disables internal Ruby/Ceedling exception handling
+  :use_test_preprocessor: :none     # Skips running the C preprocessor over test files before parsing
+  :use_auxiliary_dependencies: TRUE # Enables header dependency tracking to auto-rebuild tests when headers change
+  :build_root: build                # Output directory where build artifacts, mocks, and executables are stored
+
+# Directory structure paths relative to project.yml location
+:paths:
+  :test:
+    - .                             # Directory containing test files (test_*.c)
+  :source:
+    - ..                            # Directory containing C source code under test
+  :include:
+    - ..                            # Directory containing C header files (.h)
+  :support:
+    - support                       # Directory for custom test helpers, fixtures, or extra mocks
+
+# CMock configuration for generating mock headers and functions
+:cmock:
+  :mock_prefix: mock_               # File/function name prefix for generated mocks (e.g., mock_interface.c)
+  :when_no_prototypes: :warn        # Issue a build warning if CMock encounters a header file with no function prototypes
+  :enforce_strict_ordering: TRUE    # Enforces that mocked functions must be called in the exact sequence configured in tests
+
+  # CMock optional plugins enabled for advanced mock behaviors
+  :plugins:
+    - :ignore                       # Enables _Ignore() functions to skip call count and argument verification
+    - :ignore_arg                   # Enables _IgnoreArg_param() functions to ignore specific parameter values
+    - :array                        # Enables array verification helpers for pointer arguments
+    - :return_thru_ptr              # Enables _ReturnArrayThruPtr_param() functions to write data back into pointer arguments
+
+# Code coverage execution parameters (Gcov)
+:gcov:
+  :reports:
+    - HtmlDetailed                  # Generates an interactive, line-by-line detailed HTML coverage report
+  :utilities:
+    - gcovr                         # Uses gcovr as the underlying backend generator for coverage reports
+
+# Active Ceedling plugins
+:plugins:
+  :enabled:
+    - gcov                          # Enables the 'ceedling gcov:all' task suite for coverage testing

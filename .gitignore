@@ -1,0 +1,12 @@
+# Ceedling & Unity test build artifacts
+test/build/*
+.ceedling/
+
+# Doxygen generated documentation
+docs/html*
+
+# IDE & Editor temporary files
+.vscode/
+.idea/
+*.swp
+*.o
